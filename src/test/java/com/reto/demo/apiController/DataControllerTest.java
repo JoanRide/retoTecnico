@@ -1,14 +1,19 @@
 package com.reto.demo.apiController;
 
 
+import com.reto.demo.apiModel.DataModel;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.URISyntaxException;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) 
 public class DataControllerTest {
@@ -18,8 +23,7 @@ public class DataControllerTest {
     @LocalServerPort 
   private int port;
 
-  @Autowired 
-  private TestRestTemplate template;
+  private TestRestTemplate template=new TestRestTemplate();
   
   @Test 
   public void index() { 
@@ -27,11 +31,13 @@ public class DataControllerTest {
   }
 
   @Test 
-  public void indexResultTest() { 
-
+  public void indexResultTest()  {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    Assertions.assertThat(template.postForObject("http://localhost:" +port,headers, String.class));
-  } 
+    headers.add("user-agent", "Application");
+    HttpEntity<String> request =
+            new HttpEntity<String>("", headers);
 
+    Assertions.assertThat(template.postForObject("http://localhost:8080/data", request, String.class)).isNotNull();
+  }
 }

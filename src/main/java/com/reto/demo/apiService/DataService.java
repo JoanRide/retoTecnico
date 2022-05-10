@@ -26,7 +26,7 @@ public class DataService {
         this.baseUrl = baseUrl;
     }
 
-    public Map<String, ArrayList<String>> listarData() throws Exception{
+    /*public Map<String, ArrayList<String>> throws Exception{
         
         ArrayList<String> format = new ArrayList<String>();
         ResponseEntity<DataModel> response =template.getForEntity(baseUrl,DataModel.class);
@@ -42,7 +42,7 @@ public class DataService {
 
         return map;
     }
-
+     */
     public DataModel listarDatos() throws Exception{
 
         ResponseEntity<DataModel> response =template.getForEntity(baseUrl,DataModel.class);

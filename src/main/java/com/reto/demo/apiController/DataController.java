@@ -26,12 +26,17 @@ public class DataController {
         ArrayList<String> format = new ArrayList<String>();
         DataModel dataModel = dataService.listarDatos();
 
+        Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+        map.put("data",format);
+        if (dataModel.getData().length<=0){
+            return map;
+        }
+
         for( UserModel dato : dataModel.getData()){
             format.add(dato.toString());
         }
 
-       Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-       map.put("data",format);
+
 
         return map ;
     }
